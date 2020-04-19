@@ -1,0 +1,7 @@
+logging:
+  level:
+    root: info
+    eu.navispeed: debug
+service:
+  retrofit:
+    baseUrl: "https://downloader.navispeed.eu/"

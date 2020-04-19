@@ -1,0 +1,15 @@
+article#info {
+    height: 70vh;
+}
+
+.has-space-left {
+    margin-left: 0.5em;
+}
+
+.is-youtube {
+    background-color: red;
+}
+
+.is-half-vertically {
+    height: 50vh;
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <title>Video editor app</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+<section class="hero is-info is-fullheight">
+    <div th:include="fragments/navbar.html"></div>
+
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-full">
+                    <article id="info" class="message is-dark">
+                        <div class="message-header">
+                            <p th:text="${project.url.getTitle()}"></p>
+                        </div>
+                        <div class="message-body">
+                            <div class="columns is-multiline is-half-vertically">
+                                <div class="column is-one-third is-full-mobile">
+                                    <iframe id="ytplayer" class="is-fullwidth"
+                                            th:src="${embedPlayer}"></iframe>
+                                    <a class="button is-danger"
+                                       th:href="${project.getUrl().getUrl()}">Source <span
+                                            class="fa fa-play has-space-left"></span></a>
+                                </div>
+                                <div class="column is-one-third is-full-mobile">
+                                    Tasks:
+                                    <ul>
+                                        <li th:each="task : ${project.getTasks()}"
+                                            th:text="${task.getType()} - ${task.getState()}"></li>
+                                    </ul>
+                                </div>
+                                <div class="column is-one-third is-full-mobile">
+                                    Exports:
+                                    <ul>
+                                        <li th:each="export : ${project.getOutputs()}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="columns is-multiline is-centered">
+                                <div class="column is-one-third is-full-mobile">
+                                    <a class="button is-info is-fullwidth"
+                                       th:href="${actionUrl}">Create new task</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script async="async">
+
+</script>
+</html>

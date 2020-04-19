@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "service.retrofit.baseUrl",
+      "type": "java.lang.String",
+      "description": "Base url of the api."
+  }
+] }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:include="fragments/head.html">
+</head>
+<body>
+<section class="hero is-info is-fullheight">
+    <div th:include="fragments/navbar.html"></div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="column is-6 is-offset-3">
+                <h1 class="title">
+                    Create a new project
+                </h1>
+                <h2 class="subtitle">
+                    Start editing and exporting youtube video
+                </h2>
+                <div class="box">
+                    <form action="#" th:action="@{/}" th:object="${createProjectForm}"
+                          method="post">
+                        <div class="field is-grouped">
+                            <p class="control is-expanded">
+                                <input th:field="*{url}" class="input" type="url" placeholder="Enter a youtube video url to start">
+                            </p>
+                            <p class="control">
+                                <button type="submit" class="button is-info">Create</button>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+</html>
