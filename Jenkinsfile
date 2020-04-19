@@ -40,9 +40,9 @@ pipeline {
         }
       }
     }
-    stage('Deployement') {
+    stage('Deployment') {
       steps {
-        sh 'echo Nothing to do here'
+        build('VideoEditor - CD')
       }
     }
   }
