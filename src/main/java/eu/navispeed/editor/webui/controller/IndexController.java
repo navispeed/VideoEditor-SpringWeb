@@ -3,7 +3,6 @@ package eu.navispeed.editor.webui.controller;
 import eu.navispeed.editor.webui.controller.form.CreateProjectForm;
 import eu.navispeed.editor.webui.dto.Project;
 import eu.navispeed.editor.webui.repository.ProjectRepository;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -34,21 +33,26 @@ public class IndexController {
     return "index";
   }
 
-  @SneakyThrows
   @PostMapping
   public ModelAndView createProject(@Valid CreateProjectForm form) {
     LOGGER.debug("Received form : {}", form);
-    return Optional.ofNullable(projectRepository.createProject(form).execute().body())
-        .map(Project::getUuid).map(uuid -> {
-          try {
-            projectRepository.download(uuid, new Object()).execute();
-          } catch (IOException e) {
-            LOGGER.error("Cannot start download", e);
-          }
-          return new ModelAndView("redirect:/project/" + uuid, HttpStatus.OK);
-        }).orElse(new ModelAndView("redirect:/", Map.of("error", "Something happen, cannot create "
-            + "project for URL: " + form.getUrl()),
-            HttpStatus.BAD_REQUEST));
+    try {
+      return Optional.ofNullable(projectRepository.createProject(form).execute().body())
+          .map(Project::getUuid).map(uuid -> {
+            try {
+              projectRepository.download(uuid, new Object()).execute();
+            } catch (IOException e) {
+              LOGGER.error("Cannot start download", e);
+            }
+            return new ModelAndView("redirect:/project/" + uuid, HttpStatus.OK);
+          }).orElse(new ModelAndView("redirect:/", Map.of("error", "Something happen, cannot create "
+              + "project for URL: " + form.getUrl()),
+              HttpStatus.BAD_REQUEST));
+    } catch (IOException e) {
+      return new ModelAndView("redirect:/", Map.of("error", "Something bad happen, cannot create "
+          + "project for URL: " + form.getUrl()),
+          HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @GetMapping("/todo")

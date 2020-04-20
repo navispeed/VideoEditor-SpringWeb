@@ -37,10 +37,10 @@
         </div>
     </div>
 </section>
-<div class="pageloader"><span id="loader-text" class="title"></span></div>
-<div th:if='${param.containsKey("error")}'>
-    <div class="pageloader is-danger" id="loader-error">
-        <span class="title"></span></div>
+<div id="pageloader" class="pageloader"><span id="loader-text" class="title"></span></div>
+<div th:if='${param.error != null}'>
+    <div class="pageloader is-danger is-active" id="loader-error">
+        <span class="title" th:text="${param.error}"></span></div>
     </div>
 </body>
 <script>
@@ -48,14 +48,14 @@
         $("#createProjectForm").on("submit", submitted)
         if ($('#loader-error').length === 1) {
             setTimeout(() => {
-                window.location.href = "/#";
-            }, 5000);
+                window.location.href = "/";
+            }, 10000);
         }
     }
 
     function submitted() {
         console.log("OK")
-        $(".pageloader").addClass("is-active")
+        $("#pageloader").addClass("is-active")
         $("#loader-text").text("Creating project for " + $("#url").val())
     }
 </script>
