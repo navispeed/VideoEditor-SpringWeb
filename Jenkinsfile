@@ -42,7 +42,7 @@ pipeline {
     }
     stage('Deployment') {
       steps {
-        build('VideoEditor - CD')
+        build job: 'VideoEditor - CD', wait: false, parameters: [string(name: 'UI', value: String.valueOf(env.BRANCH_NAME + "-" + env.BUILD_NUMBER))]
       }
     }
   }
