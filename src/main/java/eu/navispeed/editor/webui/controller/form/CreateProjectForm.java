@@ -8,6 +8,7 @@ import javax.validation.constraints.Pattern;
 @Data
 @ToString
 public class CreateProjectForm {
+
   @Pattern(regexp = "(www|http:|https:)+[^\\s]+[\\w]")
   String url;
 }

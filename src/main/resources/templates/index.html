@@ -18,15 +18,18 @@
                     Start editing and exporting youtube video
                 </h2>
                 <div class="box">
-                    <form action="#" th:action="@{/}" th:object="${createProjectForm}"
+                    <form id="createProjectForm" action="#" th:action="@{/}" th:object="${createProjectForm}"
                           method="post">
                         <div class="field is-grouped">
                             <p class="control is-expanded">
-                                <input th:field="*{url}" class="input" type="url" placeholder="Enter a youtube video url to start">
+                                <input id="url" th:field="*{url}" class="input" type="url"
+                                       placeholder="Enter a youtube video url to start">
                             </p>
-                            <p class="control">
-                                <button type="submit" class="button is-info">Create</button>
-                            </p>
+                            <div>
+                                <button id="createBtn" type="submit" class="button is-info">Create</button>
+                            </div>
+
+
                         </div>
                     </form>
                 </div>
@@ -34,6 +37,19 @@
         </div>
     </div>
 </section>
+<div class="pageloader"><span id="loader-text" class="title"></span></div>
 </body>
+<script>
+    window.onload = function() {
+        var form = document.querySelector("form");
+        $("#createProjectForm").on("submit", submitted)
+        // form.onsubmit = submitted.bind(form);
+    }
 
+    function submitted() {
+        console.log("OK")
+        $(".pageloader").addClass("is-active")
+        $("#loader-text").text("Creating project for " + $("#url").val())
+    }
+</script>
 </html>

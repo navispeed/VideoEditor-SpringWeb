@@ -40,4 +40,16 @@ public class ProjectController {
     }
     return "redirect:/";
   }
+
+  @GetMapping("/{id}/action")
+  public String actionForm(Model model, @PathVariable("id") UUID projectUuid)
+      throws IOException {
+    Response<Project> execute = projectRepository.get(projectUuid).execute();
+    int code = execute.raw().code();
+    if (!execute.raw().isSuccessful()) {
+      return "redirect:/" + code;
+    }
+    Project body = execute.body();
+    return "action";
+  }
 }

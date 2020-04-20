@@ -31,7 +31,7 @@ pipeline {
         dir('docker') {
           script {
             docker.withRegistry('http://localhost:32000') {
-              def jarfiles = findFiles(glob: '*.jar')
+              def jarfiles = findFiles(glob: 'webui*.jar')
               def img = docker.build('video-editor-ui', "--build-arg JAR_FILE=${jarfiles[0].name} .")
               img.push()
               img.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}".replaceAll("/", "-"))

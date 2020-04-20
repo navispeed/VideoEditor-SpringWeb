@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,8 +24,7 @@ import java.util.Optional;
 public class IndexController {
   private final ProjectRepository projectRepository;
 
-  public IndexController(
-      ProjectRepository projectRepository) {
+  public IndexController(ProjectRepository projectRepository) {
     this.projectRepository = projectRepository;
   }
 
@@ -36,11 +36,17 @@ public class IndexController {
 
   @SneakyThrows
   @PostMapping
-  public ModelAndView createProject(@Valid CreateProjectForm form, ModelAndView modelAndView) {
+  public ModelAndView createProject(@Valid CreateProjectForm form) {
     LOGGER.debug("Received form : {}", form);
     return Optional.ofNullable(projectRepository.createProject(form).execute().body())
-        .map(Project::getUuid).map(uuid -> new ModelAndView("redirect:/project/" + uuid,
-            HttpStatus.OK))
+        .map(Project::getUuid).map(uuid -> {
+          try {
+            projectRepository.download(uuid, new Object()).execute();
+          } catch (IOException e) {
+            LOGGER.error("Cannot start download", e);
+          }
+          return new ModelAndView("redirect:/project/" + uuid, HttpStatus.OK);
+        })
         .orElse(new ModelAndView("redirect:/", Map.of("error", "Something happen"),
             HttpStatus.BAD_REQUEST));
   }

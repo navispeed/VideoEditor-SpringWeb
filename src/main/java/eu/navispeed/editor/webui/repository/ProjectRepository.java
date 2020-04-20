@@ -2,6 +2,7 @@ package eu.navispeed.editor.webui.repository;
 
 import eu.navispeed.editor.webui.controller.form.CreateProjectForm;
 import eu.navispeed.editor.webui.dto.Project;
+import eu.navispeed.editor.webui.dto.Task;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -16,4 +17,7 @@ public interface ProjectRepository {
 
   @GET("/project/{id}")
   Call<Project> get(@Path("id") UUID uuid);
+
+  @POST("/project/{id}/download")
+  Call<Task> download(@Path("id") UUID uuid, @Body Object emptyObject);
 }

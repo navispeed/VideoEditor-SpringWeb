@@ -2,17 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       lang="en">
-<head>
-    <title>Video editor app</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          rel="stylesheet"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+<head th:include="fragments/head.html">
 </head>
 <body>
 <section class="hero is-info is-fullheight">
@@ -38,8 +28,32 @@
                                 <div class="column is-one-third is-full-mobile">
                                     Tasks:
                                     <ul>
-                                        <li th:each="task : ${project.getTasks()}"
-                                            th:text="${task.getType()} - ${task.getState()}"></li>
+                                        <li th:each="task : ${project.getTasks()}">
+                                            <div class="card">
+                                                <header class="card-header">
+                                                    <p class="card-header-title" th:text="${task.getType()}"></p>
+                                                    <a href="#" class="card-header-icon"
+                                                       aria-label="more options">
+                                                          <span class="icon">
+                                                            <i class="fas fa-angle-down"
+                                                               aria-hidden="true"></i>
+                                                          </span>
+                                                    </a>
+                                                </header>
+                                                <div class="card-content">
+                                                    <div class="content">
+                                                        <p th:text="${task.getState()}"></p>
+                                                        <progress class="progress is-info"
+                                                                  th:text="${task.getProgress() == null ? 100 : task.getProgress()}"
+                                                                  th:value="${task.getProgress()}"
+                                                                  max="100"></progress>
+                                                    </div>
+                                                </div>
+                                                <footer class="card-footer">
+                                                    <a href="#" class="card-footer-item">Delete</a>
+                                                </footer>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="column is-one-third is-full-mobile">
@@ -63,7 +77,4 @@
     </div>
 </section>
 </body>
-<script async="async">
-
-</script>
 </html>
