@@ -46,8 +46,8 @@ public class IndexController {
             LOGGER.error("Cannot start download", e);
           }
           return new ModelAndView("redirect:/project/" + uuid, HttpStatus.OK);
-        })
-        .orElse(new ModelAndView("redirect:/", Map.of("error", "Something happen"),
+        }).orElse(new ModelAndView("redirect:/", Map.of("error", "Something happen, cannot create "
+            + "project for URL: " + form.getUrl()),
             HttpStatus.BAD_REQUEST));
   }
 

@@ -38,12 +38,19 @@
     </div>
 </section>
 <div class="pageloader"><span id="loader-text" class="title"></span></div>
+<div th:if='${param.containsKey("error")}'>
+    <div class="pageloader is-danger" id="loader-error">
+        <span class="title"></span></div>
+    </div>
 </body>
 <script>
     window.onload = function() {
-        var form = document.querySelector("form");
         $("#createProjectForm").on("submit", submitted)
-        // form.onsubmit = submitted.bind(form);
+        if ($('#loader-error').length === 1) {
+            setTimeout(() => {
+                window.location.href = "/#";
+            }, 5000);
+        }
     }
 
     function submitted() {
