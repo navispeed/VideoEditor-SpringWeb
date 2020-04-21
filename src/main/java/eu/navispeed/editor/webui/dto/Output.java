@@ -15,5 +15,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @ToString
 public class Output {
+  Integer id;
   boolean isExpired;
 }

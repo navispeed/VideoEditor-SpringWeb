@@ -29,6 +29,7 @@ public class Task {
     DONE_WITH_ERROR
   }
 
+  UUID id;
   State state;
   Output output;
   Type type;

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.UUID;
 
@@ -45,6 +44,7 @@ public class ProjectController {
   public String actionForm(Model model, @PathVariable("id") UUID projectUuid)
       throws IOException {
     Response<Project> execute = projectRepository.get(projectUuid).execute();
+    model.addAttribute("project", execute.body());
     int code = execute.raw().code();
     if (!execute.raw().isSuccessful()) {
       return "redirect:/" + code;

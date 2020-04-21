@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head th:include="fragments/head.html">
+</head>
+<body>
+<section class="hero is-info is-fullheight">
+    <div th:include="fragments/navbar.html"></div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <div class="columns">
+                <div class="column is-full">
+                    <video controls="controls">
+                        <source th:src="${url}">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
