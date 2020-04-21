@@ -44,12 +44,11 @@ public class ProjectController {
   public String actionForm(Model model, @PathVariable("id") UUID projectUuid)
       throws IOException {
     Response<Project> execute = projectRepository.get(projectUuid).execute();
-    model.addAttribute("project", execute.body());
     int code = execute.raw().code();
     if (!execute.raw().isSuccessful()) {
       return "redirect:/" + code;
     }
-    Project body = execute.body();
+    model.addAttribute("project", execute.body());
     return "action";
   }
 }
