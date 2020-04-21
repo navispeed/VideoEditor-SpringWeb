@@ -33,7 +33,7 @@ public class ProjectController {
       model.addAttribute("project", project);
       model.addAttribute("actionUrl", String.format("/project/%s/action", id));
       model.addAttribute("embedPlayer",
-          "http://www.youtube.com/embed/" + project.getUrl().getUrl().split("=")[1] +
+          "https://www.youtube.com/embed/" + project.getUrl().getUrl().split("=")[1] +
               "?autoplay=0&origin=https://downloader.navispeed.eu/");
       return "project";
     }
