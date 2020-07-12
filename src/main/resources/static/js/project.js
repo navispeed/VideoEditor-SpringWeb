@@ -44,7 +44,7 @@ window.onload = (() => {
 
     /**
      *
-     * @param data {{id: string, progress: number|null, type: string, state: string}}
+     * @param data {{id: string, progress: number|null, type: string, state: string, output: {expired: boolean}}}
      */
     function updateTask(data) {
         let task;
@@ -56,13 +56,13 @@ window.onload = (() => {
         } else {
             task = $(`.clone[data-id=${data.id}]`);
         }
+        let title = task.find(".card-header-title");
         if (JSON.stringify(tasks.get(data.id)) === JSON.stringify(data)) {
             return;
         }
         tasks.set(data.id, data);
 
         let progressBar = task.find(".progress");
-        let title = task.find(".card-header-title");
         let streamButton = task.find(".stream-button");
         streamButton.attr("href",`/task/${data.id}/stream`)
         progressBar.text(data.progress);
@@ -74,6 +74,13 @@ window.onload = (() => {
         title.text(jsUcfirst(data.type.toLowerCase()) + " task");
         task.removeAttr('hidden');
         task.appendTo(model.parent("ul"));
+        if (data.output.expired) {
+            let playButton = task.find(".stream-button");
+            playButton.attr("href", "#");
+            playButton.removeClass("is-info");
+            playButton.addClass("is-grey");
+            title.text(jsUcfirst(data.type.toLowerCase()) + " task (EXPIRED)");
+        }
     }
 
     setUpdateInterval(300);
